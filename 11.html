@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кодирование строки</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: cornflowerblue;
+            } 
+    input{
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+            }
+    button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    background-color: coral;
+            }
+    #result {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    word-wrap: break-word;
+            }
+    </style>
+</head>
+<body>
+    <input type="text" id="inputText" placeholder="Введите текст для кодирования">
+    <button onclick="encodeText()">Кодировать</button>
+    <div id="result"></div>
+    <div class="button-container">
+        <button onclick="copyToClipboard()">Скопировать в буфер обмена</button>
+    </div>
+
+    <script>
+        function encodeText() {
+            const inputText = document.getElementById('inputText').value;
+            let encodedText = '';
+            let count = 1;
+
+            for (let i = 0; i < inputText.length; i++) {
+                if (inputText[i] === inputText[i + 1]) {
+                    count++;
+                } else {
+                    if (count > 1) {
+                        encodedText += count + inputText[i];
+                    } else {
+                        encodedText += inputText[i];
+                    }
+                    count = 1;
+                }
+            }
+            document.getElementById('result').textContent = encodedText;
+        }
+
+        function copyToClipboard() {
+            const resultText = document.getElementById('result').textContent;
+            const tempElement = document.createElement('textarea');
+            tempElement.value = resultText;
+            document.body.appendChild(tempElement);
+            tempElement.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempElement);
+        }
+    </script>
+</body>
+</html>
